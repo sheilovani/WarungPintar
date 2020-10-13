@@ -1,6 +1,8 @@
 *** Settings ***
 Library                                  SeleniumLibrary
 
+Test Teardown   Close The Browser
+
 *** Variables ***
 ${browser}                               Chrome
 ${eBayURL}                               https://www.ebay.com/
@@ -23,12 +25,11 @@ ${applyButton}                           css:button.x-overlay-footer__apply-btn
 # ---------- Verify Filter Tags Applied  ----------
 ${filterResult}                          5.0 - 5.4 Inch Cell Phones & Smartphones between IDR5,000,000.00 and IDR9,000,000.00
 ${amountResult}                          css:.srp-controls__row-cells .srp-controls__count .srp-controls__count-heading
-${screenSizeFilterApplied}
-${valueSizeChecked}
-${PriceFilterApplied}
-${minValuePriceApplied}
-${itemLocationFilterApplied}
-${selectedAsia}
+${valueSizeChecked}                      css:li[name="Screen%2520Size"] input[aria-label="5.0 - 5.4 in"]
+${minValuePriceApplied}                  css:.x-textrange__input--from[value="5,000,000"]
+${maxValuePriceApplied}                  css:.x-textrange__input--to[value="9,000,000"]
+${selectedAsia}                          css:.x-refine__single-select-radio[data-value="Asia"][checked]
+
 
 *** Keywords ***
 Open eBay website with Chrome
@@ -47,7 +48,7 @@ Choose Cell Phones and Smartphones
     Wait Until Page Contains             Cell Phones & Smartphones    timeout=10s
 
 Scroll Page Until Find More Refinements and Click It
-    Sleep                                1 seconds
+    Sleep                                2 seconds
     Scroll Element Into View             ${moreRefinements}
     Wait Until Element is visible        ${moreRefinements}      timeout=5s
     Set Focus To Element                 ${moreRefinements}
@@ -65,7 +66,7 @@ Checkbox 5.0 - 5.4 in
     Select Checkbox                      ${5inchSize}
 
 Scroll Left Navigation Filter Bar Until Find Price and Click It
-    Sleep                                1 seconds
+    Sleep                                2 seconds
     Scroll Element Into View             ${price}
     Wait Until Element is visible        ${price}                timeout=5s
     Set Focus To Element                 ${price}
@@ -73,7 +74,7 @@ Scroll Left Navigation Filter Bar Until Find Price and Click It
 
 Input Minimum Item Price Amount IDR 5000000
     Wait Until Page Contains Element     ${textRangePrice}
-    Sleep                                1 seconds
+    Sleep                                2 seconds
     Click Element                        ${inputMinPrice}
     Input Text                           ${inputMinPrice}        5000000
 
@@ -83,14 +84,14 @@ Input Maximum Item Price Amount IDR 9000000
     Input Text                           ${inputMaxPrice}        9000000
 
 Scroll Left Navigation Filter Bar Until Find Item Location and Click It
-    Sleep                                1 seconds
+    Sleep                                2 seconds
     Scroll Element Into View             ${itemLocation}
     Wait Until Element is visible        ${itemLocation}         timeout=5s
     Set Focus To Element                 ${itemLocation}
     Click Element                        ${itemLocation}
 
 Choose Asia as Location
-    Sleep                                1 seconds
+    Sleep                                2 seconds
     Click Button                         ${radioButtonAsia}    
 
 Click Apply Button
@@ -98,18 +99,24 @@ Click Apply Button
 
 Search for Products by Applying Multiple Filters Has Been Successful
     Wait Until Page Contains             ${filterResult}
-    Wait Until Element Contains          ${amountResult}                  1-18 of 41 Results
-    Sleep                                1 seconds
-    Scroll Element Into View             ${itemLocationFilterApplied}
-    Wait Until Element is visible        ${valueSizeChecked}              timeout=5s
+    Wait Until Element Contains          ${amountResult}                  1-19 of 42 Results
+    Sleep                                2 seconds
+    Verify Filter Tags Applied
+
+Verify Filter Tags Applied
+    Scroll Element Into View             ${selectedAsia}
+    Page Should Contain Element          ${valueSizeChecked}              
     Set Focus To Element                 ${valueSizeChecked}
     Checkbox Should Be Selected          ${valueSizeChecked}
-    Wait Until Element is visible        ${minValuePriceApplied}          timeout=5s
-    Wait Until Element is visible        ${selectedAsia}                  timeout=5s
+    Page Should Contain Element          ${minValuePriceApplied}          
+    Page Should Contain Element          ${maxValuePriceApplied}          
+    Page Should Contain Element          ${selectedAsia}                  
     Set Focus To Element                 ${selectedAsia}
-    Radio Button Should Be Set To        ${selectedAsia}                  value
+    Page Should Contain Element          ${selectedAsia}
 
-
+Close The Browser
+    Close Browser
+    
 *** Test Cases ***
 Access a Product via category after applying multiple filters
     Given Open eBay website with Chrome
