@@ -101,13 +101,11 @@ Search for Products by Applying Multiple Filters Has Been Successful
     Wait Until Page Contains             ${filterResult}
     Wait Until Element Contains          ${amountResult}                  1-18 of 41 Results
     Sleep                                1 seconds
-    Scroll Element Into View             ${screenSizeFilterApplied}
+    Scroll Element Into View             ${itemLocationFilterApplied}
     Wait Until Element is visible        ${valueSizeChecked}              timeout=5s
     Set Focus To Element                 ${valueSizeChecked}
     Checkbox Should Be Selected          ${valueSizeChecked}
-    Scroll Element Into View             ${PriceFilterApplied}
     Wait Until Element is visible        ${minValuePriceApplied}          timeout=5s
-    Scroll Element Into View             ${itemLocationFilterApplied}
     Wait Until Element is visible        ${selectedAsia}                  timeout=5s
     Set Focus To Element                 ${selectedAsia}
     Radio Button Should Be Set To        ${selectedAsia}                  value
