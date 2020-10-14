@@ -11,6 +11,7 @@ ${searchButton}                          css:#gh-btn
 ${searchResult}                          css:#mainContent
 ${dropdownCategory}                      css:#gh-cat-box
 ${chooseComputerAndNetworking}           css:div#gh-cat-box .gh-sb [value="58058"]
+${firstResultName}                       css:.s-item__title--has-tags
 
 *** Keywords ***
 Open eBay website with Chrome
@@ -37,6 +38,7 @@ Change the Category to Computers/Tablets & Networking
 
 Will Show Category Computers/Tablets & Networking Search Result Page
     Wait Until Page Contains Element     ${searchResult}
+    Element Should Contain               ${firstResultName}             MacBook
 
 *** Test Cases ***
 Access a Product via Search
