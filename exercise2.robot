@@ -72,15 +72,16 @@ User Can Create a Public Gist Successfully
 Click Edit Button
     Wait Until Page Contains Element     ${editButton}
     Set Focus To Element                 ${editButton}
+    Sleep                                1 seconds
     Click Element                        ${editButton}
 
 In Editing Page
     Wait Until Page Contains Element     ${updatePublicGistButton}
 
 Edit Body Of File
-    Clear Element Text                   ${bodyTextField}
-    Click Element                        ${bodyTextField}
-    Input Text                           ${bodyTextField}               Hello, This is Warung Pintar!
+    Set Focus To Element                 ${bodyTextField}
+    Press Keys                           ${bodyTextField}               SPACE
+    Input Text                           ${bodyTextField}               How are you?
 
 Click Update Public Gist Button
     Click Button                         ${updatePublicGistButton}
