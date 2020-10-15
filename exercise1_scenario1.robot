@@ -99,7 +99,6 @@ Click Apply Button
 
 Search for Products by Applying Multiple Filters Has Been Successful
     Wait Until Page Contains             ${filterResult}
-    Wait Until Element Contains          ${amountResult}                  1-19 of 42 Results
     Sleep                                2 seconds
     Verify Filter Tags Applied
 
