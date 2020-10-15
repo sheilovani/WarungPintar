@@ -6,7 +6,7 @@ Installation
 - pip install robotframework-jsonlibrary
 
 Instructions
-Exercise 2 require input your own Gist's account
+- Exercise 2 require input your own Gist's account
 
 Run Code
-robot -d report .\filename.robot
+- robot -d report .\filename.robot
