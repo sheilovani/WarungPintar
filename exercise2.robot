@@ -20,6 +20,8 @@ ${codeAndRevisionsTab}                  css:.UnderlineNav-body
 ${editButton}                           css:a[aria-label="Edit this Gist"]
 ${updatePublicGistButton}               xpath=//*[contains(text(), 'Update public gist')]
 ${deleteButton}                         css:button[aria-label="Delete this Gist"]
+${deleteSuccess}                        id=js-flash-container
+${listOfGists}                          css:a[aria-label="All gists"]
 
 *** Keywords ***
 Open GitHub Web
@@ -89,6 +91,23 @@ Click Update Public Gist Button
 User Can Update Public Gist Successfully
     Wait Until Page Contains Element     ${codeAndRevisionsTab}
 
+Click Delete Button
+    Wait Until Page Contains Element     ${deleteButton}
+    Set Focus To Element                 ${deleteButton}
+    Sleep                                1 seconds
+    Click Element                        ${deleteButton}
+
+Appear Dialog Confirmation Pop Up Then Click OK
+    Handle Alert
+
+User Can Delete Existing Public Gist Successfully
+    Wait Until Page Contains Element     ${deleteSuccess}
+
+Gist deleted successfully
+    Wait Until Page Contains Element     ${deleteSuccess}
+
+User Can See All List of Gists Page Successfully
+    Wait Until Page Contains Element     ${listOfGists}
 
 *** Test Cases ***
 
@@ -114,3 +133,12 @@ User edit existing gist
     And Edit Body Of File
     And Click Update Public Gist Button
     Then User Can Update Public Gist Successfully
+
+User delete existing gist
+    Given Click Delete Button
+    When Appear Dialog Confirmation Pop Up Then Click OK
+    Then User Can Delete Existing Public Gist Successfully
+
+User see all gist list
+    Given Gist deleted successfully
+    Then User Can See All List of Gists Page Successfully
