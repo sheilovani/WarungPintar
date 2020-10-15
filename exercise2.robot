@@ -17,9 +17,9 @@ ${dropdownMenuButton}                   css:.select-menu-button
 ${chooseCreatePublicGist}               xpath=//*[contains(text(), 'Create public gist')]
 ${CreatePublicGistButton}               css:button.js-sync-select-menu-button
 ${codeAndRevisionsTab}                  css:.UnderlineNav-body                             
-${editButton}                           xpath=//*[contains(@class, 'btn-sm')]
-${pageEditGist}                         css=.page-gist-edit
+${editButton}                           css:a[aria-label="Edit this Gist"]
 ${updatePublicGistButton}               xpath=//*[contains(text(), 'Update public gist')]
+${deleteButton}                         css:button[aria-label="Delete this Gist"]
 
 *** Keywords ***
 Open GitHub Web
@@ -71,13 +71,15 @@ User Can Create a Public Gist Successfully
 
 Click Edit Button
     Wait Until Page Contains Element     ${editButton}
+    Set Focus To Element                 ${editButton}
     Click Element                        ${editButton}
 
 In Editing Page
-    Wait Until Page Contains Element     ${pageEditGist}
+    Wait Until Page Contains Element     ${updatePublicGistButton}
 
-Add some words
+Edit Body Of File
     Clear Element Text                   ${bodyTextField}
+    Click Element                        ${bodyTextField}
     Input Text                           ${bodyTextField}               Hello, This is Warung Pintar!
 
 Click Update Public Gist Button
@@ -108,6 +110,6 @@ User create a public gist
 User edit existing gist
     Given Click Edit Button
     When In Editing Page
-    And Add some words
+    And Edit Body Of File
     And Click Update Public Gist Button
     Then User Can Update Public Gist Successfully
