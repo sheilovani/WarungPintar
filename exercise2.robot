@@ -33,10 +33,10 @@ Click Sign In
 
 Login With Valid Username
     Wait Until Page Contains             Sign in to GitHub
-    Input Text                           ${usernameTextField}        sheilovani
+    Input Text                           ${usernameTextField}        yourUsername
 
 Login With Valid Password
-    Input Password                       ${passwordTextField}        she1lovani
+    Input Password                       ${passwordTextField}        yourPassword
 
 Click Sign In Button
     Click Button                         ${signInButton}
