@@ -77,13 +77,14 @@ In Editing Page
     Wait Until Page Contains Element     ${pageEditGist}
 
 Add some words
-    Press Keys                           ue00d
-    Input Text                           ${bodyTextField}               How are you?
+    Clear Element Text                   ${bodyTextField}
+    Input Text                           ${bodyTextField}               Hello, This is Warung Pintar!
 
 Click Update Public Gist Button
     Click Button                         ${updatePublicGistButton}
 
 User Can Update Public Gist Successfully
+    Wait Until Page Contains Element     ${codeAndRevisionsTab}
 
 
 *** Test Cases ***
@@ -109,4 +110,4 @@ User edit existing gist
     When In Editing Page
     And Add some words
     And Click Update Public Gist Button
-    # Then User Can Update Public Gist Successfully
+    Then User Can Update Public Gist Successfully
